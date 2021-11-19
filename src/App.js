@@ -1,6 +1,6 @@
 import { Component } from "react";
 import "./App.css";
-import ShoppingCart from "./components/ShoppingCart";
+// import ShoppingCart from "./components/ShoppingCart";
 import productData from "./data/productData";
 
 class App extends Component{
@@ -23,6 +23,17 @@ class App extends Component{
     })
   }
 
+  handleSubtotal=(event)=>{
+    console.log(event.target.price)
+    console.log(this.state.productsLists);
+  }
+
+  // Checkout
+  handleBuyNowClick=(event)=>{
+    event.preventDefault();
+    console.log("Clicked Buy Now button");
+  }
+
   render(){
     let shoppingCartArr = this.state.productsLists.map((product)=>{
       let { name, price } = product; 
@@ -31,7 +42,7 @@ class App extends Component{
           className="cart-container"
           onClick={()=>this.addProduct(product)}
         >
-          <li>{name} Price: {price.toFixed(2)}</li>
+          <li>{name}: ${price.toFixed(2)}</li>
         </div>
       )
     })
@@ -67,7 +78,7 @@ class App extends Component{
         <div>
           <h3>Cart</h3>
           { shoppingCartArr }
-          <div><h3>Subtotal: ${this.state.productsLists.price}</h3></div>
+          <div><h3>Subtotal: {this.handleSubtotal} ${this.state.productsLists.price}</h3></div>
           <div><h3>Tax: ${this.state.productPrice}</h3></div>
           <div><h3>Total: ${this.state.productPrice}</h3></div>
         </div>
@@ -80,7 +91,7 @@ class App extends Component{
 
         <div className="form-container">
           <h3>Checkout</h3>
-          <form id="checkout">
+          <form onClick={this.handleBuyNowClick} id="checkout">
             <div>
               <label htmlFor="first-name">First Name</label><br />
               <input type="text" required />
