@@ -1,5 +1,6 @@
 import { Component } from "react";
 import "./App.css";
+import ShoppingCart from "./components/ShoppingCart";
 import productData from "./data/productData";
 
 class App extends Component{
@@ -7,25 +8,15 @@ class App extends Component{
     super();
 
     this.state = {
-      // Products
       allProductsList: productData,
-
-      // Cart
       productsLists: [],
-
-      productListItem: [],
-
       newProduct: {
         productName: '',
         productPrice: 0,
         productDescription: '',
         productImg: "",
         productId: '',
-      },
-
-      subtotal: 0,
-      tax: 0,
-      total: 0,
+    },
     }
   }
 
@@ -34,22 +25,16 @@ class App extends Component{
     console.log("clicked product's name:", product.name)
     console.log("clicked product's price:", product.price.toFixed(2))
 
-
     this.setState({
-      newProduct: {
-        productName: product.name,
-        productPrice: product.price.toFixed(2),
-        productDescription: product.description,
-        productImg: product.img,
-        productId: product.id,
-      }
+      newProduct: product,
     })
+  }
 
-    return ( 
-      <div>
-        {this.state.newProduct.productName}: ${this.state.newProduct.productPrice}
-        </div>
-    )
+  addProduct= () => {
+    const { productsLists, newProduct } = this.state;
+    this.setState({
+      newProduct: [...productsLists, newProduct]
+    })
   }
 
   handleAddListItem=()=>{
@@ -69,7 +54,7 @@ class App extends Component{
           <h4>{product.name}</h4>
           <div>Price: ${product.price.toFixed(2)}</div>
           <br />
-          <button onClick={()=>this.handleCartClick(product)} 
+          <button onClick={this.addProduct} 
             type="submit">Add To Cart</button>
           <br />
           <img src={product.img} alt={product.name} />
@@ -95,7 +80,7 @@ class App extends Component{
 
     return(
       <div className="garage-container">
-        <h2 className="header">My Garage Sale</h2>
+        <h2 className="header">Christina's Garage Sale</h2>
         {/* START - products section */}
         <div className="products-container">
           <h3>Products</h3>
@@ -106,15 +91,7 @@ class App extends Component{
         {/* END - products section */}
         {/* START - cart section */}
 
-        <div className="cart-container">
-          <h3>Cart</h3>
-          <ul>
-            <li>{productsLists}</li>
-          </ul>
-          <div><h3>Subtotal: ${this.state.productPrice}</h3></div>
-          <div><h3>Tax: ${this.state.productPrice}</h3></div>
-          <div><h3>Total: ${this.state.productPrice}</h3></div>
-        </div>
+        <ShoppingCart productsLists={this.productsLists}/>
 
         {/* END - cart section */}
         {/* START - checkout section */}
