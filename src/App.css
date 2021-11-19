@@ -1,3 +1,26 @@
+.garage-container{
+    display: grid;
+    grid-template-areas:
+    "header header header"
+    "products products cart"
+    "products products form"
+}
+
+.header {
+    grid-area: header;
+}
+
+.products-container {
+    grid-area: products;
+}
+
+.cart-container {
+    grid-area: cart;
+}
+
+.form-container {
+    grid-area: form;
+}
 
 .products {
     border: 2px solid red;

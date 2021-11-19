@@ -7,28 +7,52 @@ class App extends Component{
     super();
 
     this.state = {
-      productId: '',
-      productName: '',
-      productPrice: 0,
-      productDescription: '',
-      productImg: "",
+      allProductsList: productData,
+
+      
+      productsList: [],
+
+      newProduct: {
+        productId: '',
+        productName: '',
+        productPrice: 0,
+        productDescription: '',
+        productImg: "",
+      },
+
     }
   }
 
+  handleProductDisplay = ()=>{
+
+  }
+
   render(){
+    console.log(this.state.allProductsList);
+
+    let productsListArr = this.state.allProductsList.map((product)=>{
+      return (
+        <div>
+          <div>Price: ${product.price.toFixed(2)}</div>
+          <button type="submit">Add To Cart</button>
+          <img src={product.img} alt={product.name} />
+          <div>{product.name}</div>
+          <div>{product.description}</div>
+        </div>
+      )
+    })
+
     return(
-      <div>
-        <h2>My Garage Sale</h2>
+      <div className="garage-container">
+        <h2 className="header">My Garage Sale</h2>
         {/* START - products section */}
 
         <div className="products-container">
           <h3>Products</h3>
           <div className="products">
-            <div>Price: $19.99</div>
-            <button type="submit">Add To Cart</button>
-            <img src="product-img" alt="product image" />
-            <div>Baseball Glove</div>
-            <div>Product Description</div>
+            {productsListArr}
+
+            
           </div>
         </div>
 
