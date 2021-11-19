@@ -23,8 +23,11 @@
 }
 
 .products {
-    border: 2px solid red;
     width: 200px;
     display: grid;
     grid-template-rows: repeat(4, 1fr);
+}
+
+.product-card {
+    border: 1px solid black;
 }

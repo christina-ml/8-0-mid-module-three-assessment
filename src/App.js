@@ -7,37 +7,88 @@ class App extends Component{
     super();
 
     this.state = {
+      // Products
       allProductsList: productData,
 
-      
-      productsList: [],
+      // Cart
+      productsLists: [],
+
+      productListItem: [],
 
       newProduct: {
-        productId: '',
         productName: '',
         productPrice: 0,
         productDescription: '',
         productImg: "",
+        productId: '',
       },
 
+      subtotal: 0,
+      tax: 0,
+      total: 0,
     }
   }
 
-  handleProductDisplay = ()=>{
+  // Cart:
+  handleCartClick=(product)=>{
+    console.log("clicked product's name:", product.name)
+    console.log("clicked product's price:", product.price.toFixed(2))
+
+
+    this.setState({
+      newProduct: {
+        productName: product.name,
+        productPrice: product.price.toFixed(2),
+        productDescription: product.description,
+        productImg: product.img,
+        productId: product.id,
+      }
+    })
+
+    return ( 
+      <div>
+        {this.state.newProduct.productName}: ${this.state.newProduct.productPrice}
+        </div>
+    )
+  }
+
+  handleAddListItem=()=>{
 
   }
 
   render(){
-    console.log(this.state.allProductsList);
+    // console.log("allProductsList: ", this.state.allProductsList);
+    // console.log("productsList: ", this.state.productsLists);
 
+    // Products:
     let productsListArr = this.state.allProductsList.map((product)=>{
       return (
-        <div>
+        <div className="product-card"
+           
+        >
+          <h4>{product.name}</h4>
           <div>Price: ${product.price.toFixed(2)}</div>
-          <button type="submit">Add To Cart</button>
+          <br />
+          <button onClick={()=>this.handleCartClick(product)} 
+            type="submit">Add To Cart</button>
+          <br />
           <img src={product.img} alt={product.name} />
-          <div>{product.name}</div>
+          <br /><br />
           <div>{product.description}</div>
+          <br /><br />
+        </div>
+      )
+    })
+
+    // Cart:
+    let productsLists = this.state.allProductsList.map((product, i)=>{
+      return (
+        <div>
+          <li key={product + i} 
+          product={this.state.product}
+          >          
+            {this.state.newProduct.productName}: ${this.state.newProduct.productPrice}
+          </li>
         </div>
       )
     })
@@ -46,28 +97,23 @@ class App extends Component{
       <div className="garage-container">
         <h2 className="header">My Garage Sale</h2>
         {/* START - products section */}
-
         <div className="products-container">
           <h3>Products</h3>
           <div className="products">
             {productsListArr}
-
-            
           </div>
         </div>
-
         {/* END - products section */}
         {/* START - cart section */}
 
         <div className="cart-container">
           <h3>Cart</h3>
           <ul>
-            <li>Item Name: $Price.00</li>
-            <li>Item Name: $Price.00</li>
+            <li>{productsLists}</li>
           </ul>
-          <div><h3>Subtotal: $Price.00</h3></div>
-          <div><h3>Tax: $Price.00</h3></div>
-          <div><h3>Total: $Price.00</h3></div>
+          <div><h3>Subtotal: ${this.state.productPrice}</h3></div>
+          <div><h3>Tax: ${this.state.productPrice}</h3></div>
+          <div><h3>Total: ${this.state.productPrice}</h3></div>
         </div>
 
         {/* END - cart section */}
@@ -77,23 +123,23 @@ class App extends Component{
           <form id="checkout">
             <div>
               <label htmlFor="first-name">First Name</label><br />
-              <input type="text" />
+              <input type="text" required />
             </div>
             <div>
               <label htmlFor="last-name">Last Name</label><br />
-              <input type="text" />
+              <input type="text" required />
             </div>
             <div>
               <label htmlFor="email">Email</label><br />
-              <input type="text" />
+              <input type="text" required />
             </div>
             <div>
               <label htmlFor="credit-card">Credit Card</label><br />
-              <input type="text" />
+              <input type="text" required />
             </div>
             <div>
               <label htmlFor="zip-code">Zip Code</label><br />
-              <input type="text" />
+              <input type="text" required />
             </div>
             <div>
               <button type="submit">Buy Now</button>
