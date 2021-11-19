@@ -1,12 +1,17 @@
 import { Component } from "react";
 import "./App.css";
+import productData from "./data/productData";
 
 class App extends Component{
   constructor(){
     super();
 
     this.state = {
-
+      productId: '',
+      productName: '',
+      productPrice: 0,
+      productDescription: '',
+      productImg: "",
     }
   }
 
@@ -16,15 +21,13 @@ class App extends Component{
         <h2>My Garage Sale</h2>
         {/* START - products section */}
 
-        <div className="products">
+        <div className="products-container">
           <h3>Products</h3>
-          <div className="product-card">
-            <div>Price: $Price.00</div>
-            <br />
+          <div className="products">
+            <div>Price: $19.99</div>
             <button type="submit">Add To Cart</button>
-            <br />
             <img src="product-img" alt="product image" />
-            <br />
+            <div>Baseball Glove</div>
             <div>Product Description</div>
           </div>
         </div>
@@ -32,7 +35,7 @@ class App extends Component{
         {/* END - products section */}
         {/* START - cart section */}
 
-        <div className="cart">
+        <div className="cart-container">
           <h3>Cart</h3>
           <ul>
             <li>Item Name: $Price.00</li>
@@ -45,9 +48,9 @@ class App extends Component{
 
         {/* END - cart section */}
         {/* START - checkout section */}
-        <div className="form" id="checkout">
+        <div className="form-container">
           <h3>Checkout</h3>
-          <form>
+          <form id="checkout">
             <div>
               <label htmlFor="first-name">First Name</label><br />
               <input type="text" />
