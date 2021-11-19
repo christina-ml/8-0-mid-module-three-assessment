@@ -31,8 +31,7 @@ class App extends Component{
           className="cart-container"
           onClick={()=>this.addProduct(product)}
         >
-          <div>Name: {name}</div>
-          <div>Price: {price}</div>
+          <li>{name} Price: {price.toFixed(2)}</li>
         </div>
       )
     })
@@ -66,7 +65,11 @@ class App extends Component{
         </div>
 
         <div>
+          <h3>Cart</h3>
           { shoppingCartArr }
+          <div><h3>Subtotal: ${this.state.productsLists.price}</h3></div>
+          <div><h3>Tax: ${this.state.productPrice}</h3></div>
+          <div><h3>Total: ${this.state.productPrice}</h3></div>
         </div>
 
         {/* <ShoppingCart 
@@ -74,6 +77,7 @@ class App extends Component{
           productsLists={this.productsLists} 
           addProduct={this.addProduct}
         /> */}
+
         <div className="form-container">
           <h3>Checkout</h3>
           <form id="checkout">
