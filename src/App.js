@@ -10,51 +10,41 @@ class App extends Component{
     this.state = {
       allProductsList: productData,
       productsLists: [],
-      newProduct: {
-        productName: '',
-        productPrice: 0,
-        productDescription: '',
-        productImg: "",
-        productId: '',
-    },
     }
   }
 
   // Cart:
-  handleCartClick=(product)=>{
-    console.log("clicked product's name:", product.name)
-    console.log("clicked product's price:", product.price.toFixed(2))
-
+  addProduct= (product) => {
+    // console.log("clicked product's name:", product.name)
+    // console.log("clicked product's price:", product.price.toFixed(2))
+    const { productsLists } = this.state;
     this.setState({
-      newProduct: product,
+      productsLists: [...productsLists, product],
     })
-  }
-
-  addProduct= () => {
-    const { productsLists, newProduct } = this.state;
-    this.setState({
-      newProduct: [...productsLists, newProduct]
-    })
-  }
-
-  handleAddListItem=()=>{
-
   }
 
   render(){
-    // console.log("allProductsList: ", this.state.allProductsList);
-    // console.log("productsList: ", this.state.productsLists);
+    let shoppingCartArr = this.state.productsLists.map((product)=>{
+      let { name, price } = product; 
+      return (
+        <div
+          className="cart-container"
+          onClick={()=>this.addProduct(product)}
+        >
+          <div>Name: {name}</div>
+          <div>Price: {price}</div>
+        </div>
+      )
+    })
 
     // Products:
     let productsListArr = this.state.allProductsList.map((product)=>{
       return (
-        <div className="product-card"
-           
-        >
+        <div className="product-card">
           <h4>{product.name}</h4>
           <div>Price: ${product.price.toFixed(2)}</div>
           <br />
-          <button onClick={this.addProduct} 
+          <button onClick={()=>this.addProduct(product)} 
             type="submit">Add To Cart</button>
           <br />
           <img src={product.img} alt={product.name} />
@@ -65,36 +55,25 @@ class App extends Component{
       )
     })
 
-    // Cart:
-    let productsLists = this.state.allProductsList.map((product, i)=>{
-      return (
-        <div>
-          <li key={product + i} 
-          product={this.state.product}
-          >          
-            {this.state.newProduct.productName}: ${this.state.newProduct.productPrice}
-          </li>
-        </div>
-      )
-    })
-
     return(
       <div className="garage-container">
-        <h2 className="header">Christina's Garage Sale</h2>
-        {/* START - products section */}
+        <h2 className="header">My Garage Sale</h2>
         <div className="products-container">
           <h3>Products</h3>
           <div className="products">
             {productsListArr}
           </div>
         </div>
-        {/* END - products section */}
-        {/* START - cart section */}
 
-        <ShoppingCart productsLists={this.productsLists}/>
+        <div>
+          { shoppingCartArr }
+        </div>
 
-        {/* END - cart section */}
-        {/* START - checkout section */}
+        {/* <ShoppingCart 
+          allProductsList={this.allProductsList}
+          productsLists={this.productsLists} 
+          addProduct={this.addProduct}
+        /> */}
         <div className="form-container">
           <h3>Checkout</h3>
           <form id="checkout">
@@ -123,7 +102,7 @@ class App extends Component{
             </div>
           </form>
         </div>
-        {/* END - checkout section */}
+
       </div>
     )
   }
